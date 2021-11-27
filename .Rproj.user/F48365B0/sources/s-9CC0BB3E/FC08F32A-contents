@@ -1,0 +1,13 @@
+name: drill-down
+title: drill-down
+username:
+account: monyake
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 5211510
+bundleId: 5297869
+url: https://monyake.shinyapps.io/drill-down/
+when: 1637968170.6531
+lastSyncTime: 1637968170.65311
+asMultiple: FALSE
+asStatic: FALSE
