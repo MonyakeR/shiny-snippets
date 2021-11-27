@@ -5,9 +5,9 @@ account: monyake
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 5211510
-bundleId: 5297869
+bundleId: 5298825
 url: https://monyake.shinyapps.io/drill-down/
-when: 1637968170.6531
-lastSyncTime: 1637968170.65311
+when: 1638005716.28436
+lastSyncTime: 1638005716.28438
 asMultiple: FALSE
 asStatic: FALSE

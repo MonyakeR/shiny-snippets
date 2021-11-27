@@ -52,7 +52,10 @@ server <- function(input, output, session) {
       sales_table <- sales %>% 
         filter(ORDERDATE == selected_bar())
       
-      reactable(sales_table)
+      reactable(
+        sales_table,
+        defaultPageSize = 5
+      )
     }
       
   })
