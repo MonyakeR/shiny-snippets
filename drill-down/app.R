@@ -4,40 +4,36 @@ library(dplyr)
 library(plotly)
 library(reactable)
 library(lubridate)
+library(bslib)
 
-ui <- fluidPage(
+ui <- page_fluid(
   title = "Plotly drill down",
-  fluidRow(
-    column(
-      12,
-      plotlyOutput("bar"),
-      br(),
-      uiOutput("back"),
-      reactableOutput("table"),
-    )
-  )
+  h3("Drill down plot in plotly"),
+  card(
+    card_header("Click on the bar to drill down on the data"),
+    card_body(plotlyOutput("bar"))
+  ),
+  uiOutput("back"),
+  reactableOutput("table")
 )
 
 server <- function(input, output, session) {
-  
-  sales <- read_csv("sales_data_sample.csv")
-  
-  
-  sales <- sales %>%
+  # read in the data
+  sales_raw <- read_csv("sales_data_sample.csv")
+  # wrangle the data
+  sales <- sales_raw %>%
     mutate(ORDERDATE = lubridate::mdy(ORDERDATE)) %>% 
     filter(year(ORDERDATE) == 2005)
   
-  # to know which bar was selected
+  # reactive to know which bar was selected
   selected_bar <- reactiveVal(NULL)
   
   # create the plotly plot
-  fig <- sales %>% 
-    group_by(ORDERDATE) %>% 
-    dplyr::summarise(TOTALSALES =sum(SALES)) %>% 
-    plot_ly(x = ~ORDERDATE, y = ~TOTALSALES, type = 'bar', source = "A")
-  
   output$bar <- renderPlotly({
-    fig
+    sales %>% 
+      group_by(ORDERDATE) %>% 
+      summarise(TOTALSALES = sum(SALES)) %>% 
+      plot_ly(x = ~ ORDERDATE, y = ~ TOTALSALES, type = 'bar', source = "A")
   })
   
   # get the date of the selected bar
@@ -57,7 +53,6 @@ server <- function(input, output, session) {
         defaultPageSize = 5
       )
     }
-      
   })
   
   # show the back button to hide drill down table
